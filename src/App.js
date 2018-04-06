@@ -11,6 +11,9 @@ class BooksApp extends React.Component {
 		searchResults: []
 	};
 
+	/**
+	 * @description Gets all the books on the shelves and updates the state
+	 */
 	componentDidMount() {
 		BooksAPI.getAll()
 			.then((books) => {
@@ -20,11 +23,20 @@ class BooksApp extends React.Component {
 			})
 	}
 
+	/**
+	 * @description Update the book shelf with the API
+	 * @param {object} book - The book that we want update
+	 * @param {string} shelf - Name of the shelf
+	 */
 	onUpdateShelf = (book, shelf) => {
 		BooksAPI.update(book,shelf)
 			.then(() => this.componentDidMount())
 	};
 
+	/**
+	 * @description Gets the search results from the API
+	 * @param {string} query - The search input
+	 */
 	onSearch = (query) => {
 		if(query && query.length) {
 			BooksAPI.search(query)
@@ -52,7 +64,6 @@ class BooksApp extends React.Component {
 						books={this.state.books}
 						searchResults={this.state.searchResults}
 						onSearch={(query) => {
-							console.log(query);
 							this.onSearch(query);
 						}}
 						onUpdateShelf={(book, shelf) => {
