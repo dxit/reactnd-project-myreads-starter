@@ -46,6 +46,12 @@ class BooksApp extends React.Component {
 					}))
 				});
 		}
+		// Reset searchResults to prevent to show previous results
+		else {
+			this.setState(() => ({
+				searchResults: []
+			}))
+		}
 	};
 
 	render() {
