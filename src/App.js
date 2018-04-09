@@ -24,13 +24,21 @@ class BooksApp extends React.Component {
 	}
 
 	/**
-	 * @description Update the book shelf with the API
+	 * @description Update the book shelf with the API and update the book state
 	 * @param {object} book - The book that we want update
 	 * @param {string} shelf - Name of the shelf
 	 */
 	onUpdateShelf = (book, shelf) => {
-		BooksAPI.update(book,shelf)
-			.then(() => this.componentDidMount())
+		let bookWithNewShelf = book;
+		bookWithNewShelf.shelf = shelf;
+
+		this.setState((currentState) => ({
+			books: currentState.books.filter((c) => {
+				return c.id !== book.id
+			}).concat(bookWithNewShelf)
+		}));
+
+		BooksAPI.update(book,shelf);
 	};
 
 	/**
