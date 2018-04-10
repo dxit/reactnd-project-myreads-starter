@@ -2,10 +2,12 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Book from './Book'
 import PropType from "prop-types";
+import {Card, Divider, Button, Input, Icon} from 'semantic-ui-react'
 
 class Search extends Component {
 	static propTypes = {
 		books: PropType.array.isRequired,
+		isLoading: PropType.bool,
 		searchResults: PropType.array.isRequired,
 		onSearch: PropType.func.isRequired,
 		onUpdateShelf: PropType.func.isRequired
@@ -35,14 +37,21 @@ class Search extends Component {
 
 	render() {
 		const {query} = this.state;
-		const {searchResults, books, onUpdateShelf} = this.props;
+		const {searchResults, isLoading, books, onUpdateShelf} = this.props;
 
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
-					<Link to="/" className="close-search">Close</Link>
 					<div className="search-books-input-wrapper">
-						<input type="text" placeholder="Search by title or author" onChange={(event) => {
+						<Input loading={isLoading} action={
+							<Button animated as={Link} to="/">
+								<Button.Content hidden>
+									Back
+								</Button.Content>
+								<Button.Content visible>
+									<Icon name="arrow left"/>
+								</Button.Content>
+							</Button>} actionPosition="left" placeholder="Search by title or author" fluid onChange={(event) => {
 							this.handleSearch(event.target.value);
 							this.updateQuery(event.target.value);
 						}}/>
@@ -50,16 +59,19 @@ class Search extends Component {
 				</div>
 				<div className="search-books-results">
 					{query && query.length && searchResults.length ? (
-						<ol className="books-grid">
-							{searchResults.map((book) => (
-								<Book
-									key={book.id}
-									books={books}
-									book={book}
-									onUpdateShelf={onUpdateShelf}
-								/>
-							))}
-						</ol>
+						<div>
+							<Divider/>
+							<Card.Group>
+								{searchResults.map((book) => (
+									<Book
+										key={book.id}
+										books={books}
+										book={book}
+										onUpdateShelf={onUpdateShelf}
+									/>
+								))}
+							</Card.Group>
+						</div>
 					) : ('')}
 				</div>
 			</div>

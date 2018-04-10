@@ -1,14 +1,15 @@
 import React from 'react'
 import {Route} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import './App.css'
 import Library from './Library'
 import Search from './Search'
+import {Container} from 'semantic-ui-react'
 
 class BooksApp extends React.Component {
 	state = {
 		books: [],
-		searchResults: []
+		searchResults: [],
+		isLoading: false
 	};
 
 	/**
@@ -19,7 +20,7 @@ class BooksApp extends React.Component {
 			.then((books) => {
 				this.setState(() => ({
 					books
-				}))
+				}));
 			})
 	}
 
@@ -29,6 +30,8 @@ class BooksApp extends React.Component {
 	 * @param {string} shelf - Name of the shelf
 	 */
 	onUpdateShelf = (book, shelf) => {
+		if (book.shelf === shelf) return;
+
 		let bookWithNewShelf = book;
 		bookWithNewShelf.shelf = shelf;
 
@@ -38,7 +41,7 @@ class BooksApp extends React.Component {
 			}).concat(bookWithNewShelf)
 		}));
 
-		BooksAPI.update(book,shelf);
+		BooksAPI.update(book, shelf);
 	};
 
 	/**
@@ -46,18 +49,24 @@ class BooksApp extends React.Component {
 	 * @param {string} query - The search input
 	 */
 	onSearch = (query) => {
-		if(query && query.length) {
+		if (query && query.length) {
+			this.setState(() => ({
+				isLoading: true
+			}));
+
 			BooksAPI.search(query)
 				.then((results) => {
 					this.setState(() => ({
-						searchResults: results
+						searchResults: results,
+						isLoading: false
 					}))
 				});
 		}
 		// Reset searchResults to prevent to show previous results
 		else {
 			this.setState(() => ({
-				searchResults: []
+				searchResults: [],
+				isLoading: false
 			}))
 		}
 	};
@@ -66,24 +75,29 @@ class BooksApp extends React.Component {
 		return (
 			<div className="app">
 				<Route exact path="/" render={() => (
-					<Library
-						books={this.state.books}
-						onUpdateShelf={(book, shelf) => {
-							this.onUpdateShelf(book, shelf);
-						}}
-					/>
+					<Container fluid={true}>
+						<Library
+							books={this.state.books}
+							onUpdateShelf={(book, shelf) => {
+								this.onUpdateShelf(book, shelf);
+							}}
+						/>
+					</Container>
 				)}/>
 				<Route path="/search" render={({history}) => (
-					<Search
-						books={this.state.books}
-						searchResults={this.state.searchResults}
-						onSearch={(query) => {
-							this.onSearch(query);
-						}}
-						onUpdateShelf={(book, shelf) => {
-							this.onUpdateShelf(book, shelf);
-						}}
-					/>
+					<Container fluid={true}>
+						<Search
+							books={this.state.books}
+							isLoading={this.state.isLoading}
+							searchResults={this.state.searchResults}
+							onSearch={(query) => {
+								this.onSearch(query);
+							}}
+							onUpdateShelf={(book, shelf) => {
+								this.onUpdateShelf(book, shelf);
+							}}
+						/>
+					</Container>
 				)}/>
 			</div>
 		)

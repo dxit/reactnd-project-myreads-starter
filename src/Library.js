@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropType from 'prop-types'
 import {Link} from 'react-router-dom'
 import Bookshelf from './Bookshelf'
+import {Header, Icon, Button} from 'semantic-ui-react'
 
 class Library extends Component {
 	static propTypes = {
@@ -26,33 +27,43 @@ class Library extends Component {
 
 		return (
 			<div className="list-books">
-				<div className="list-books-title">
-					<h1>MyReads</h1>
-				</div>
-				<div className="list-books-content">
-					<div>
-						<Bookshelf
-							title='Currently Reading'
-							bookshelf={currentlyReading}
-							onUpdateShelf={onUpdateShelf}
-							books={books}
-						/>
-						<Bookshelf
-							title='Want to Read'
-							bookshelf={wantToRead}
-							onUpdateShelf={onUpdateShelf}
-							books={books}
-						/>
-						<Bookshelf
-							title='Read'
-							bookshelf={read}
-							onUpdateShelf={onUpdateShelf}
-							books={books}
-						/>
-					</div>
+				<Header as="h1" icon textAlign='center'>
+					<Icon name='book' circular/>
+					<Header.Content>MyReads</Header.Content>
+				</Header>
+				<div>
+					<Bookshelf
+						title="Currently Reading"
+						bookshelf={currentlyReading}
+						onUpdateShelf={onUpdateShelf}
+						books={books}
+					/>
+					<br/>
+					<br/>
+					<Bookshelf
+						title="Want to Read"
+						bookshelf={wantToRead}
+						onUpdateShelf={onUpdateShelf}
+						books={books}
+					/>
+					<br/>
+					<br/>
+					<Bookshelf
+						title="Read"
+						bookshelf={read}
+						onUpdateShelf={onUpdateShelf}
+						books={books}
+					/>
 				</div>
 				<div className="open-search">
-					<Link to="/search">Add a book</Link>
+					<Button animated as={Link} to="/search">
+						<Button.Content hidden>
+							Next
+						</Button.Content>
+						<Button.Content visible>
+							<Icon name="add"/>
+						</Button.Content>
+					</Button>
 				</div>
 			</div>
 		)

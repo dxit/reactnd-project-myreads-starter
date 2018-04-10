@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropType from "prop-types";
 import Book from './Book'
+import {Header, Card} from 'semantic-ui-react'
 
 class Bookshelf extends Component {
 	static propTypes = {
@@ -15,19 +16,17 @@ class Bookshelf extends Component {
 
 		return (
 			<div className="bookshelf">
-				<h2 className="bookshelf-title">{title}</h2>
-				<div className="bookshelf-books">
-					<ol className="books-grid">
-						{bookshelf.map((book) => (
-							<Book
-								key={book.id}
-								books={books}
-								book={book}
-								onUpdateShelf={onUpdateShelf}
-							/>
-						))}
-					</ol>
-				</div>
+				<Header as="h2" dividing>{title}</Header>
+				<Card.Group>
+					{bookshelf.map((book) => (
+						<Book
+							key={book.id}
+							books={books}
+							book={book}
+							onUpdateShelf={onUpdateShelf}
+						/>
+					))}
+				</Card.Group>
 			</div>
 		)
 	}

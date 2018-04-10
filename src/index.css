@@ -1,11 +1,20 @@
 html {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
+
 *, *:before, *:after {
-  box-sizing: inherit;
+	box-sizing: inherit;
 }
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 40px 40px 180px !important;
+	font-family: 'Roboto', sans-serif;
+	height: auto !important;
+}
+
+.open-search {
+	position: fixed;
+	right: 25px;
+	bottom: 25px;
 }
