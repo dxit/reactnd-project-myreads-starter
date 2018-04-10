@@ -94,7 +94,7 @@ class Book extends Component {
 					<Grid columns={2}>
 						<Grid.Row>
 							<Grid.Column>
-								{labelCurrentShelf[0].text}
+								<div className="currentShelfState">{labelCurrentShelf[0].text}</div>
 							</Grid.Column>
 							<Grid.Column>
 								<Menu compact>

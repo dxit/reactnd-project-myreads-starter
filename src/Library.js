@@ -34,22 +34,21 @@ class Library extends Component {
 				<div>
 					<Bookshelf
 						title="Currently Reading"
+						className="bookshelf"
 						bookshelf={currentlyReading}
 						onUpdateShelf={onUpdateShelf}
 						books={books}
 					/>
-					<br/>
-					<br/>
 					<Bookshelf
 						title="Want to Read"
+						className="bookshelf"
 						bookshelf={wantToRead}
 						onUpdateShelf={onUpdateShelf}
 						books={books}
 					/>
-					<br/>
-					<br/>
 					<Bookshelf
 						title="Read"
+						className="bookshelf"
 						bookshelf={read}
 						onUpdateShelf={onUpdateShelf}
 						books={books}
@@ -58,7 +57,7 @@ class Library extends Component {
 				<div className="open-search">
 					<Button animated as={Link} to="/search">
 						<Button.Content hidden>
-							Next
+							Add
 						</Button.Content>
 						<Button.Content visible>
 							<Icon name="add"/>

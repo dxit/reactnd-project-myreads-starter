@@ -18,3 +18,15 @@ body {
 	right: 25px;
 	bottom: 25px;
 }
+
+.currentShelfState	{
+	display: flex;
+	align-items: center;
+	color: rgba(0,0,0,0.95);
+	height: 100%;
+	padding-bottom: 4px;
+}
+
+.bookshelf {
+	margin-bottom: 40px;
+}
