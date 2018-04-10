@@ -28,7 +28,7 @@ class Library extends Component {
 		return (
 			<div className="list-books">
 				<Header as="h1" icon textAlign='center'>
-					<Icon name='book' circular/>
+					<Icon name="book" circular/>
 					<Header.Content>MyReads</Header.Content>
 				</Header>
 				<div>
