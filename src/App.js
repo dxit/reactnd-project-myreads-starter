@@ -1,8 +1,9 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Library from './Library'
 import Search from './Search'
+import NoMatch from './NoMatch'
 import {Container} from 'semantic-ui-react'
 
 class BooksApp extends React.Component {
@@ -74,31 +75,34 @@ class BooksApp extends React.Component {
 	render() {
 		return (
 			<div className="app">
-				<Route exact path="/" render={() => (
-					<Container fluid={true}>
-						<Library
-							books={this.state.books}
-							onUpdateShelf={(book, shelf) => {
-								this.onUpdateShelf(book, shelf);
-							}}
-						/>
-					</Container>
-				)}/>
-				<Route path="/search" render={({history}) => (
-					<Container fluid={true}>
-						<Search
-							books={this.state.books}
-							isLoading={this.state.isLoading}
-							searchResults={this.state.searchResults}
-							onSearch={(query) => {
-								this.onSearch(query);
-							}}
-							onUpdateShelf={(book, shelf) => {
-								this.onUpdateShelf(book, shelf);
-							}}
-						/>
-					</Container>
-				)}/>
+				<Switch>
+					<Route exact path="/" render={() => (
+						<Container fluid={true}>
+							<Library
+								books={this.state.books}
+								onUpdateShelf={(book, shelf) => {
+									this.onUpdateShelf(book, shelf);
+								}}
+							/>
+						</Container>
+					)}/>
+					<Route path="/search" render={({history}) => (
+						<Container fluid={true}>
+							<Search
+								books={this.state.books}
+								isLoading={this.state.isLoading}
+								searchResults={this.state.searchResults}
+								onSearch={(query) => {
+									this.onSearch(query);
+								}}
+								onUpdateShelf={(book, shelf) => {
+									this.onUpdateShelf(book, shelf);
+								}}
+							/>
+						</Container>
+					)}/>
+					<Route component={NoMatch}/>
+				</Switch>
 			</div>
 		)
 	}
